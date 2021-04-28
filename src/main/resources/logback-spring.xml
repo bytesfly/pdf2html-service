@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="60000" debug="false">
+
+    <property name="APP_NAME" value="pdf2html-service"/>
+
+    <property name="LOG_HOME" value="logs/"/>
+    <property name="LOG_LEVEL" value="INFO"/>
+    <property name="LOG_KEEP_TIME" value="7"/>
+
+    <contextName>${APP_NAME}</contextName>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{100} [%file:%line] - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level][%logger{100}] [%file:%line] - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/${APP_NAME}.debug.log.%d{yyyy-MM-dd}.%i</FileNamePattern>
+            <MaxHistory>${LOG_KEEP_TIME}</MaxHistory>
+            <maxFileSize>200MB</maxFileSize>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level][%logger{100}] [%file:%line] - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/${APP_NAME}.info.log.%d{yyyy-MM-dd}.%i</FileNamePattern>
+            <MaxHistory>${LOG_KEEP_TIME}</MaxHistory>
+            <maxFileSize>200MB</maxFileSize>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level][%logger{100}] [%file:%line] - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/${APP_NAME}.error.log.%d{yyyy-MM-dd}.%i</FileNamePattern>
+            <MaxHistory>${LOG_KEEP_TIME}</MaxHistory>
+            <maxFileSize>200MB</maxFileSize>
+            <totalSizeCap>2GB</totalSizeCap>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <logger name="ch.qos.logback" level="INFO" additivity="true"/>
+
+    <logger name="org.springframework" level="INFO" additivity="true"/>
+
+    <logger name="org.apache" level="INFO" additivity="true"/>
+
+    <logger name="com.github.iflyendless" level="${LOG_LEVEL}" additivity="false">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="DEBUG_FILE"/>
+        <appender-ref ref="INFO_FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
+    </logger>
+
+    <root level="ERROR">
+        <appender-ref ref="stdout"/>
+        <appender-ref ref="ERROR_FILE"/>
+    </root>
+
+</configuration>
