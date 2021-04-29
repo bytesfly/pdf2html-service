@@ -1,9 +1,25 @@
 
 Convert PDF to HTML without losing text or format.
 
-用`springboot`把`pdf2htmlEX`命令行工具包装为`web`服务, 使得PDF转HTML更为方便。 
+用`springboot`把`pdf2htmlEX`命令行工具包装为`web`服务, 使得`PDF`转`HTML`更方便。 
 
 详情见: [https://github.com/pdf2htmlEX/pdf2htmlEX](https://github.com/pdf2htmlEX/pdf2htmlEX)
+
+## 快速开始
+```sh
+# 拉取镜像
+docker pull iflyendless/pdf2html-service:1.0.0
+
+# 启动
+docker run --name pdf2html -p 8686:8686 -d --rm iflyendless/pdf2html-service:1.0.0
+```
+使用:
+```sh
+curl -o html.zip --location --request POST 'localhost:8686/api/pdf2html' --form 'files=@/pdfs/001.pdf'
+```
+提醒一下: `/pdfs/001.pdf`指的是pdf文件所在的绝对路径  
+
+在当前目录解压`html.zip`, 即可看到转换后的`html`文件以及`000-task.txt`。
 
 ## 构建镜像
 ```sh
@@ -32,6 +48,10 @@ docker run --name pdf2html -p 8686:8686 -d --rm pdf2html-service:1.0.0
 # 执行/usr/local/bin/pdf2htmlEX命令时最大超时时间,单位s表示秒(默认600s)
 -e PDF2HTML_COMMAND_TIMEOUT=600s
 ```
+即:
+```sh
+docker run --name pdf2html -p 8686:8686 -e PDF2HTML_MAX_PROCESS=10 -e PDF2HTML_COMMAND_TIMEOUT=60s -d --rm pdf2html-service:1.0.0
+```
 更多配置见: `resources`目录下的`application.yml`文件。
 
 ## Http接口
@@ -50,4 +70,22 @@ curl http://localhost:8686/api/config
 
 ```sh
 curl -o html.zip --location --request POST 'localhost:8686/api/pdf2html' --form 'files=@/pdfs/001.pdf' --form 'files=@/pdfs/002.pdf' --form 'files=@/pdfs/003.pdf'
+```
+提醒一下: `/pdfs/001.pdf`指的是pdf文件所在的绝对路径
+
+## 问题排查
+
+```sh
+# 进入容器
+docker exec -it pdf2html bash
+
+# 查看日志目录
+cd /opt/pdf2html-service/logs
+
+# 查看转换失败的pdf
+cd /tmp/pdf2html-service/failed-pdfs
+
+# 手动调用pdf2htmlEX命令转换pdf
+pdf2htmlEX --help
+
 ```

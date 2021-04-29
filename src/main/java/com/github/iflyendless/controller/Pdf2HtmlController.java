@@ -35,7 +35,7 @@ import java.util.concurrent.Semaphore;
 public class Pdf2HtmlController {
 
     private static final String PDF = "pdf";
-    private static final String FAILED_PDF_DIR = "failed_pdfs";
+    private static final String FAILED_PDF_DIR = "failed-pdfs";
     private static final String TASK_FILE = "000-task.txt";
 
     @Resource
