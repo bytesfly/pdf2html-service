@@ -12,7 +12,7 @@
 
     <groupId>com.github.iflyendless</groupId>
     <artifactId>pdf2html-service</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <repositories>
         <repository>

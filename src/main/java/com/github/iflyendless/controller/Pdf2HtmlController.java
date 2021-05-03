@@ -21,10 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileFilter;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
@@ -55,12 +52,24 @@ public class Pdf2HtmlController {
 
     @GetMapping("/version")
     public Object version() {
-        return "1.0.0";
+        return "1.0.1";
     }
 
     @GetMapping("/config")
     public Object config() {
         return pdf2HtmlProperties;
+    }
+
+    @GetMapping("/metric")
+    public Object metric() {
+        Map<String, Object> semaphoreMap = new LinkedHashMap<>();
+        semaphoreMap.put("availablePermits", semaphore.availablePermits());
+        semaphoreMap.put("queueLength", semaphore.getQueueLength());
+
+        Map<String, Object> metricMap = new LinkedHashMap<>();
+        metricMap.put("semaphore", semaphoreMap);
+
+        return metricMap;
     }
 
     @PostMapping("/pdf2html")

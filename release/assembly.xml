@@ -19,6 +19,14 @@
         </fileSet>
 
         <fileSet>
+            <directory>${project.basedir}/release</directory>
+            <outputDirectory>pdf2html-service/</outputDirectory>
+            <includes>
+                <include>*.pdf</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
             <directory>${project.basedir}/src/main/resources</directory>
             <outputDirectory>pdf2html-service/</outputDirectory>
             <includes>

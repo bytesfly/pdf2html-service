@@ -16,10 +16,10 @@ RUN echo "set termencoding=utf-8" >> /etc/vim/vimrc
 RUN echo "set encoding=utf-8" >> /etc/vim/vimrc
 
 # jdk
-ADD https://enos.itcollege.ee/~jpoial/allalaadimised/jdk8/jdk-8u281-linux-x64.tar.gz /tmp/
-RUN tar -zxf /tmp/jdk-8u281-linux-x64.tar.gz -C /opt/ && rm -f /tmp/jdk-8u281-linux-x64.tar.gz
+ADD https://enos.itcollege.ee/~jpoial/allalaadimised/jdk8/jdk-8u291-linux-x64.tar.gz /tmp/
+RUN tar -zxf /tmp/jdk-*.tar.gz -C /opt/ && rm -f /tmp/jdk-*.tar.gz && mv /opt/jdk* /opt/jdk
 
-ENV JAVA_HOME /opt/jdk1.8.0_281
+ENV JAVA_HOME /opt/jdk
 ENV PATH ${JAVA_HOME}/bin:$PATH
 
 # pdf2html-service

@@ -8,16 +8,16 @@ Convert PDF to HTML without losing text or format.
 ## 快速开始
 ```sh
 # 拉取镜像
-docker pull iflyendless/pdf2html-service:1.0.0
+docker pull iflyendless/pdf2html-service:1.0.1
 
 # 启动
-docker run --name pdf2html -p 8686:8686 -d --rm iflyendless/pdf2html-service:1.0.0
+docker run --name pdf2html -p 8686:8686 -d --rm iflyendless/pdf2html-service:1.0.1
 ```
 使用:
 ```sh
-curl -o html.zip --location --request POST 'localhost:8686/api/pdf2html' --form 'files=@/pdfs/001.pdf'
+curl -o html.zip --request POST 'localhost:8686/api/pdf2html' --form 'files=@/pdfs/example.pdf'
 ```
-提醒一下: `/pdfs/001.pdf`指的是pdf文件所在的绝对路径  
+提醒一下: `/pdfs/example.pdf`指的是pdf文件所在的绝对路径  
 
 在当前目录解压`html.zip`, 即可看到转换后的`html`文件以及`000-task.txt`。
 
@@ -33,12 +33,13 @@ cd pdf2html-service
 mvn clean package -DskipTests
 
 # build docker image
-docker build -t pdf2html-service:1.0.0 .
+docker build -t pdf2html-service:1.0.1 .
 ```
+如果构建镜像失败，请检查 [https://enos.itcollege.ee/~jpoial/allalaadimised/jdk8/](https://enos.itcollege.ee/~jpoial/allalaadimised/jdk8/) 该站点下jdk版本是否与`Dockerfile`中的下载版本一致。
 
 ## 启动
 ```sh
-docker run --name pdf2html -p 8686:8686 -d --rm pdf2html-service:1.0.0
+docker run --name pdf2html -p 8686:8686 -d --rm pdf2html-service:1.0.1
 ```
 如果需要格外设置一些参数的话, 可以启动docker的时候通过`-e`传进去: 
 ```sh
@@ -50,7 +51,7 @@ docker run --name pdf2html -p 8686:8686 -d --rm pdf2html-service:1.0.0
 ```
 即:
 ```sh
-docker run --name pdf2html -p 8686:8686 -e PDF2HTML_MAX_PROCESS=10 -e PDF2HTML_COMMAND_TIMEOUT=60s -d --rm pdf2html-service:1.0.0
+docker run --name pdf2html -p 8686:8686 -e PDF2HTML_MAX_PROCESS=10 -e PDF2HTML_COMMAND_TIMEOUT=60s -d --rm pdf2html-service:1.0.1
 ```
 更多配置见: `resources`目录下的`application.yml`文件。
 
@@ -69,9 +70,15 @@ curl http://localhost:8686/api/config
 (3) 上传多个pdf, 并下载html压缩包
 
 ```sh
-curl -o html.zip --location --request POST 'localhost:8686/api/pdf2html' --form 'files=@/pdfs/001.pdf' --form 'files=@/pdfs/002.pdf' --form 'files=@/pdfs/003.pdf'
+curl -o html.zip --request POST 'localhost:8686/api/pdf2html' --form 'files=@/pdfs/001.pdf' --form 'files=@/pdfs/002.pdf' --form 'files=@/pdfs/003.pdf'
 ```
 提醒一下: `/pdfs/001.pdf`指的是pdf文件所在的绝对路径
+
+(4) 查询程序暴露出来的metric
+
+```sh
+curl http://localhost:8686/api/metric
+```
 
 ## 问题排查
 
