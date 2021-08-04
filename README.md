@@ -8,10 +8,10 @@ Convert PDF to HTML without losing text or format.
 ## 快速开始
 ```sh
 # 拉取镜像
-docker pull iflyendless/pdf2html-service:1.0.1
+docker pull bytesfly/pdf2html-service:1.0.1
 
 # 启动
-docker run --name pdf2html -p 8686:8686 -d --rm iflyendless/pdf2html-service:1.0.1
+docker run --name pdf2html -p 8686:8686 -d --rm bytesfly/pdf2html-service:1.0.1
 ```
 使用:
 ```sh
@@ -24,7 +24,7 @@ curl -o html.zip --request POST 'localhost:8686/api/pdf2html' --form 'files=@/pd
 ## 构建镜像
 ```sh
 # 下载代码
-git clone https://github.com/iflyendless/pdf2html-service.git
+git clone https://github.com/bytesfly/pdf2html-service.git
 
 # 进入项目
 cd pdf2html-service
@@ -35,7 +35,6 @@ mvn clean package -DskipTests
 # build docker image
 docker build -t pdf2html-service:1.0.1 .
 ```
-如果构建镜像失败，请检查 [https://enos.itcollege.ee/~jpoial/allalaadimised/jdk8/](https://enos.itcollege.ee/~jpoial/allalaadimised/jdk8/) 该站点下jdk版本是否与`Dockerfile`中的下载版本一致。
 
 ## 启动
 ```sh

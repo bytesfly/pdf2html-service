@@ -16,7 +16,7 @@ RUN echo "set termencoding=utf-8" >> /etc/vim/vimrc
 RUN echo "set encoding=utf-8" >> /etc/vim/vimrc
 
 # jdk
-ADD https://enos.itcollege.ee/~jpoial/allalaadimised/jdk8/jdk-8u291-linux-x64.tar.gz /tmp/
+ADD https://repo.huaweicloud.com/java/jdk/8u202-b08/jdk-8u202-linux-x64.tar.gz /tmp/
 RUN tar -zxf /tmp/jdk-*.tar.gz -C /opt/ && rm -f /tmp/jdk-*.tar.gz && mv /opt/jdk* /opt/jdk
 
 ENV JAVA_HOME /opt/jdk
